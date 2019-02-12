@@ -50,13 +50,13 @@ export default class Game extends React.Component {
 
   handleInput(letter) {
     let { scrambledWord, pos } = this.state
-    letterIndex = scrambledWord.indexOf(letter.toLowerCase())
+    letterIndex = scrambledWord.indexOf(letter.toLowerCase(), pos)
 
     if(letterIndex != -1) {
-      console.warn(pos)
+      // console.warn(pos)
       this.arrayMove(scrambledWord, letterIndex, pos)
     } else {
-      console.warn('Try again')
+      // console.warn('Try again')
     }
   }
 
@@ -111,7 +111,6 @@ export default class Game extends React.Component {
         }
     }
     arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
-
 
     this.setState({
       scrambledWord: arr,
