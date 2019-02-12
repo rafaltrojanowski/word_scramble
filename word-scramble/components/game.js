@@ -7,14 +7,17 @@ export default class Game extends React.Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
       pos: 0,
+      isHighlighted: false,
     }
   }
 
   render() {
     let { word } = this.props
-    let { typedKey, scrambledWord } = this.state
+    let { scrambledWord, isHighlighted } = this.state
+    let splitedWord = word.split("")
 
     if (!scrambledWord) return (null)
 
@@ -23,7 +26,12 @@ export default class Game extends React.Component {
         <View style={{flexDirection:'row', flexWrap:'wrap'}}>
           {scrambledWord.map(function (letter, index) {
             return (
-              <Card letter={letter} key={index}></Card>
+              <Card
+                letter={letter}
+                answer={splitedWord[index]}
+                isHighlighted={isHighlighted}
+                key={index}>
+              </Card>
             )
           })}
         </View>
@@ -70,9 +78,16 @@ export default class Game extends React.Component {
     }
   }
 
+  handleHighlight() {
+    this.setState({
+      isHighlighted: true
+    })
+  }
+
   handleKeyPress = (key) => {
     switch(key) {
       case '?':
+        this.handleHighlight()
         break;
       case 'Backspace':
         this.handleBackspace(key)

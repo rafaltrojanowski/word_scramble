@@ -4,21 +4,37 @@ import { Text, View, StyleSheet } from 'react-native';
 export default class Card extends React.Component {
 
   render() {
+    let { letter, answer, isHighlighted } = this.props
+    let status = letter == answer ? 1 : 0
 
-    let { letter } = this.props
+    if (isHighlighted) {
+      text = <Text style={ status ? styles.greenText : styles.redText }>{letter}</Text>
+    } else {
+      text = <Text style={ styles.blackText}>{letter}</Text>
+    }
 
     return (
-      <View>
-        <Text style={styles.baseText}>{letter}</Text>
-      </View>
+      <View>{text}</View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  baseText: {
+  blackText: {
     fontFamily: 'Cochin',
     fontSize: 50,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+  },
+  greenText: {
+    fontFamily: 'Cochin',
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: 'green'
+  },
+  redText: {
+    fontFamily: 'Cochin',
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: 'red'
   }
 });
