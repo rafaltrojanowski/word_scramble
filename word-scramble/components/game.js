@@ -19,22 +19,24 @@ export default class Game extends React.Component {
     if (!scrambledWord) return (null)
 
     return (
-      <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+      <View>
+        <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+          {scrambledWord.map(function (letter, index) {
+            return (
+              <Card letter={letter} key={index}></Card>
+            )
+          })}
+        </View>
 
-       <TextInput
-          autoFocus
-          onKeyPress={({ nativeEvent }) => {
-            this.handleKeyPress(nativeEvent.key)
-          }}
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        />
-
-        {scrambledWord.map(function (letter, index) {
-          return (
-            <Card letter={letter} key={index}></Card>
-          )
-        })}
-
+        <View>
+         <TextInput
+            autoFocus
+            onKeyPress={({ nativeEvent }) => {
+              this.handleKeyPress(nativeEvent.key)
+            }}
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          />
+        </View>
       </View>
     )
   }
