@@ -1,15 +1,28 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import Card  from './card';
-import { Keyboard, TextInput } from 'react-native';
+import React from 'react'
+import { Text, View } from 'react-native'
+import Card  from './card'
+import { Keyboard, TextInput } from 'react-native'
+import { connect } from 'react-redux'
 
-export default class Game extends React.Component {
+mapStateToProps = state => {
+  return {
+    cursorPosition: state.cursorPosition
+  }
+}
+
+mapDispatchToProps = dispatch => {
+  return {
+    increasePosition: () => dispatch({type: "INCREASE_POSITION"}),
+    decreasePosition: () => dispatch({type: "DECREASE_POSITION"})
+  }
+}
+
+class Game extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      pos: 0,
       isHighlighted: false,
     }
   }
@@ -37,6 +50,12 @@ export default class Game extends React.Component {
         </View>
 
         <View>
+          <Text>
+            {this.props.cursorPosition}
+          </Text>
+        </View>
+
+        <View>
          <TextInput
             autoFocus
             onKeyPress={({ nativeEvent }) => {
@@ -57,25 +76,20 @@ export default class Game extends React.Component {
   }
 
   handleInput(letter) {
-    let { scrambledWord, pos } = this.state
-    letterIndex = scrambledWord.indexOf(letter.toLowerCase(), pos)
+    let { scrambledWord } = this.state
+    let { cursorPosition } = this.props
+    letterIndex = scrambledWord.indexOf(letter.toLowerCase(), cursorPosition)
 
     if(letterIndex != -1) {
-      // console.warn(pos)
-      this.arrayMove(scrambledWord, letterIndex, pos)
+      this.arrayMove(scrambledWord, letterIndex, cursorPosition)
     } else {
       // console.warn('Try again')
     }
   }
 
   handleBackspace() {
-    currentPos = this.state.pos
-
-    if(currentPos > 0) {
-      this.setState({
-        pos: this.state.pos - 1,
-      })
-    }
+    cursorPosition = this.props.cursorPosition
+    if(cursorPosition > 0) { this.props.decreasePosition() }
   }
 
   handleHighlight() {
@@ -129,9 +143,12 @@ export default class Game extends React.Component {
 
     this.setState({
       scrambledWord: arr,
-      pos: this.state.pos + 1,
     })
+
+    this.props.increasePosition()
 
     return arr
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game)
