@@ -6,14 +6,19 @@ import { connect } from 'react-redux'
 
 mapStateToProps = state => {
   return {
-    cursorPosition: state.cursorPosition
+    scrambledWord: state.scrambledWord,
+    cursorPosition: state.cursorPosition,
+    previous: state.previous,
   }
 }
 
 mapDispatchToProps = dispatch => {
   return {
-    increasePosition: () => dispatch({type: "INCREASE_POSITION"}),
-    decreasePosition: () => dispatch({type: "DECREASE_POSITION"})
+    decreasePosition: () => dispatch({type: 'DECREASE_POSITION'}),
+    updateHistory: (array) => dispatch({
+      type: "UPDATE_HISTORY",
+      scrambledWord: array
+    })
   }
 }
 
@@ -28,11 +33,13 @@ class Game extends React.Component {
   }
 
   render() {
-    let { word } = this.props
-    let { scrambledWord, isHighlighted } = this.state
+    let { word, scrambledWord } = this.props
+    let { isHighlighted } = this.state
     let splitedWord = word.split("")
 
     if (!scrambledWord) return (null)
+
+    console.warn(this.props.previous)
 
     return (
       <View>
@@ -54,6 +61,11 @@ class Game extends React.Component {
             {this.props.cursorPosition}
           </Text>
         </View>
+        <View>
+          {this.props.previous.map((item, key) =>
+            <Text key={key}>{item}</Text>
+          )}
+        </View>
 
         <View>
          <TextInput
@@ -70,18 +82,16 @@ class Game extends React.Component {
 
   componentDidMount(){
     let scrambledWord = this.shuffle(this.props.word.split(""))
-    this.setState({
-      scrambledWord,
-    })
+    this.props.updateHistory(scrambledWord)
   }
 
   handleInput(letter) {
-    let { scrambledWord } = this.state
-    let { cursorPosition } = this.props
+    let { scrambledWord, cursorPosition } = this.props
     letterIndex = scrambledWord.indexOf(letter.toLowerCase(), cursorPosition)
 
     if(letterIndex != -1) {
-      this.arrayMove(scrambledWord, letterIndex, cursorPosition)
+      newArray = this.arrayMove(scrambledWord, letterIndex, cursorPosition)
+      this.props.updateHistory(newArray)
     } else {
       // console.warn('Try again')
     }
@@ -89,13 +99,13 @@ class Game extends React.Component {
 
   handleBackspace() {
     cursorPosition = this.props.cursorPosition
-    if(cursorPosition > 0) { this.props.decreasePosition() }
+    if(cursorPosition > 0) { 
+      this.props.decreasePosition() 
+    }
   }
 
   handleHighlight() {
-    this.setState({
-      isHighlighted: true
-    })
+    this.setState({isHighlighted: true})
   }
 
   handleKeyPress = (key) => {
@@ -140,12 +150,6 @@ class Game extends React.Component {
         }
     }
     arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
-
-    this.setState({
-      scrambledWord: arr,
-    })
-
-    this.props.increasePosition()
 
     return arr
   }
