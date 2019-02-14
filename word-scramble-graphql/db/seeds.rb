@@ -6,8 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-100.times do
-  Word.create(content_en: LiterateRandomizer.word)
-end
+if Rails.env.development?
+  Word.delete_all
+  100.times do
+    Word.create(content_en: LiterateRandomizer.word.downcase)
+  end
 
-puts "Created #{Word.count} words."
+  puts "Created #{Word.count} words."
+end

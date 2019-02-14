@@ -50,18 +50,7 @@ class Game extends React.Component {
           })}
         </View>
 
-        <View>
-          <Text>
-            {this.props.cursorPosition}
-          </Text>
-        </View>
-        <View>
-          {this.props.previous.map((item, key) =>
-            <Text key={key}>{item}</Text>
-          )}
-        </View>
-
-        <View>
+        <View style={{display: 'none'}}>
          <TextInput
             autoFocus
             onKeyPress={({ nativeEvent }) => {
@@ -96,12 +85,12 @@ class Game extends React.Component {
     if(cursorPosition > 0) { this.props.removeWord () }
   }
 
-  verifyAndHighlight() { this.setState({isHighlighted: true}) }
+  toggleHighlight() { this.setState({isHighlighted: !this.state.isHighlighted}) }
 
   handleKeyPress = (key) => {
     switch(key) {
       case '?': // TODO: that should be Enter ideally
-        this.verifyAndHighlight()
+        this.toggleHighlight()
         break;
       case 'Backspace':
         this.handleBackspace(key)
