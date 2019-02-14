@@ -1,6 +1,6 @@
 ### Word Scramble Game
 
-![screenshot](scramble.gif)
+![screenshot](scramble_s.gif)
 
 ### Debugging Redux state
 
