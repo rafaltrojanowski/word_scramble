@@ -25,12 +25,13 @@ class Game extends React.Component {
 
     this.state = {
       isHighlighted: false,
+      typedKey: null
     }
   }
 
   render() {
     let { word, scrambledWord } = this.props
-    let { isHighlighted } = this.state
+    let { isHighlighted, typedKey } = this.state
     let splitedWord = word.split("")
 
     if (!scrambledWord) return (<Text>Loading...</Text>)
@@ -48,6 +49,12 @@ class Game extends React.Component {
               </Card>
             )
           })}
+        </View>
+
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 10}}>
+            {typedKey}
+          </Text>
         </View>
 
         <View style={{display: 'none'}}>
@@ -68,24 +75,28 @@ class Game extends React.Component {
     this.props.addWord(scrambledWord)
   }
 
-  handleInput(letter) {
+  handleInput(key) {
     let { scrambledWord, cursorPosition } = this.props
-    letterIndex = scrambledWord.indexOf(letter.toLowerCase(), cursorPosition)
+    letterIndex = scrambledWord.indexOf(key.toLowerCase(), cursorPosition)
 
     if(letterIndex != -1) {
       newScrambledWord = this.arrayMove(scrambledWord, letterIndex, cursorPosition)
       this.props.addWord(newScrambledWord)
+      this.setState({ typedKey: key })
     } else {
-      // console.warn('Try again')
+      this.setState({ typedKey: `Not found: ${key}. Try again!` })
     }
   }
 
   handleBackspace() {
     cursorPosition = this.props.cursorPosition
-    if(cursorPosition > 0) { this.props.removeWord () }
+    if(cursorPosition > 0) {
+      this.props.removeWord ()
+      this.setState({ isHighlighted: false })
+    }
   }
 
-  toggleHighlight() { this.setState({isHighlighted: !this.state.isHighlighted}) }
+  toggleHighlight() { this.setState({ isHighlighted: !this.state.isHighlighted }) }
 
   handleKeyPress = (key) => {
     switch(key) {
