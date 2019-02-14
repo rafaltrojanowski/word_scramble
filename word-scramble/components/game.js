@@ -32,40 +32,54 @@ class Game extends React.Component {
   render() {
     let { word, scrambledWord } = this.props
     let { isHighlighted, typedKey } = this.state
-    let splitedWord = word.split("")
-
-    if (!scrambledWord) return (<Text>Loading...</Text>)
 
     return (
       <View>
-        <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-          {scrambledWord.map(function (letter, index) {
-            return (
-              <Card
-                letter={letter}
-                answer={splitedWord[index]}
-                isHighlighted={isHighlighted}
-                key={index}>
-              </Card>
-            )
-          })}
-        </View>
+        {this.renderGame(word, scrambledWord, isHighlighted)}
+        {this.renderInfo(typedKey)}
+        {this.renderInput()}
+      </View>
+    )
+  }
 
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 10}}>
-            {typedKey}
-          </Text>
-        </View>
+  renderGame = (word, scrambledWord, isHighlighted) => {
+    if (!scrambledWord) return (<Text>Loading...</Text>)
 
-        <View style={{display: 'none'}}>
-         <TextInput
-            autoFocus
-            onKeyPress={({ nativeEvent }) => {
-              this.handleKeyPress(nativeEvent.key)
-            }}
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          />
-        </View>
+    return(
+      <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+        {scrambledWord.map(function (letter, index) {
+          return (
+            <Card
+              letter={letter}
+              answer={word.split("")[index]}
+              isHighlighted={isHighlighted}
+              key={index}>
+            </Card>
+          )
+        })}
+      </View>
+    )
+  }
+
+  renderInfo = (typedKey) => {
+    return(
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 10}}>
+          {typedKey}
+        </Text>
+      </View>
+    )
+  }
+
+  renderInput = () => {
+    return(
+      <View style={{display: 'none'}}>
+        <TextInput
+          autoCapitalize={'none'}
+          autoFocus
+          onKeyPress={({ nativeEvent }) => { this.handleKeyPress(nativeEvent.key) }}
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        />
       </View>
     )
   }
@@ -100,7 +114,7 @@ class Game extends React.Component {
 
   handleKeyPress = (key) => {
     switch(key) {
-      case '?': // TODO: that should be Enter ideally
+      case ' ':
         this.toggleHighlight()
         break;
       case 'Backspace':
