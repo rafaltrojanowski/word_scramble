@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Game from './components/game';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const intitialState = {
   cursorPosition: -1,
@@ -16,7 +17,7 @@ const reducer = (state = intitialState, action) => {
       const previousWord = state.previous[state.cursorPosition - 2]
       const newPrevious = state.previous.slice(0, state.previous.length - 1)
 
-      return { 
+      return {
         scrambledWord: previousWord,
         cursorPosition: state.cursorPosition - 1,
         previous: newPrevious
@@ -34,7 +35,7 @@ const reducer = (state = intitialState, action) => {
   return state
 }
 
-const store = createStore(reducer)
+const store = createStore(reducer, composeWithDevTools())
 
 export default class App extends React.Component {
   render() {
