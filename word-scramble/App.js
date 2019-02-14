@@ -13,26 +13,26 @@ const intitialState = {
 
 const reducer = (state = intitialState, action) => {
   switch(action.type) {
-    case 'DECREASE_POSITION':
-      const previousWord = state.previous[state.cursorPosition - 2]
-      const newPrevious = state.previous.slice(0, state.previous.length - 1)
+    case 'REMOVE_WORD':
+      const previous = state.previous
 
-      return {
+      const previousWord = previous[state.cursorPosition - 1]
+      const newPrevious = previous.slice(0, previous.length - 1)
+
+      return Object.assign({}, state, {
         scrambledWord: previousWord,
         cursorPosition: state.cursorPosition - 1,
         previous: newPrevious
-      }
-     case 'UPDATE_HISTORY':
-      const word = action.scrambledWord
-      return {
-        scrambledWord: word,
+      })
+     case 'ADD_WORD':
+      return Object.assign({}, state, {
+        scrambledWord: action.scrambledWord,
         cursorPosition: state.cursorPosition + 1,
-        //previous: [...state.previous, `${word}${state.cursorPosition + 1}`]
-        previous: [...state.previous, [word]]
-      }
+        previous: [...state.previous, action.scrambledWord]
+      })
+    default:
+      return state
   }
-
-  return state
 }
 
 const store = createStore(reducer, composeWithDevTools())

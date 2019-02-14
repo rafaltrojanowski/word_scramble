@@ -5,19 +5,15 @@ import { Keyboard, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 
 mapStateToProps = state => {
-  return {
-    scrambledWord: state.scrambledWord,
-    cursorPosition: state.cursorPosition,
-    previous: state.previous,
-  }
+  return { ...state }
 }
 
 mapDispatchToProps = dispatch => {
   return {
-    decreasePosition: () => dispatch({type: 'DECREASE_POSITION'}),
-    updateHistory: (array) => dispatch({
-      type: "UPDATE_HISTORY",
-      scrambledWord: array
+    removeWord : () => dispatch({type: 'REMOVE_WORD'}),
+    addWord: (scrambledWord) => dispatch({
+      type: "ADD_WORD",
+      scrambledWord
     })
   }
 }
@@ -37,9 +33,7 @@ class Game extends React.Component {
     let { isHighlighted } = this.state
     let splitedWord = word.split("")
 
-    if (!scrambledWord) return (null)
-
-    console.warn(this.props.previous)
+    if (!scrambledWord) return (<Text>Loading...</Text>)
 
     return (
       <View>
@@ -82,7 +76,7 @@ class Game extends React.Component {
 
   componentDidMount(){
     let scrambledWord = this.shuffle(this.props.word.split(""))
-    this.props.updateHistory(scrambledWord)
+    this.props.addWord(scrambledWord)
   }
 
   handleInput(letter) {
@@ -90,8 +84,8 @@ class Game extends React.Component {
     letterIndex = scrambledWord.indexOf(letter.toLowerCase(), cursorPosition)
 
     if(letterIndex != -1) {
-      newArray = this.arrayMove(scrambledWord, letterIndex, cursorPosition)
-      this.props.updateHistory(newArray)
+      newScrambledWord = this.arrayMove(scrambledWord, letterIndex, cursorPosition)
+      this.props.addWord(newScrambledWord)
     } else {
       // console.warn('Try again')
     }
@@ -99,19 +93,15 @@ class Game extends React.Component {
 
   handleBackspace() {
     cursorPosition = this.props.cursorPosition
-    if(cursorPosition > 0) { 
-      this.props.decreasePosition() 
-    }
+    if(cursorPosition > 0) { this.props.removeWord () }
   }
 
-  handleHighlight() {
-    this.setState({isHighlighted: true})
-  }
+  verifyAndHighlight() { this.setState({isHighlighted: true}) }
 
   handleKeyPress = (key) => {
     switch(key) {
-      case '?':
-        this.handleHighlight()
+      case '?': // TODO: that should be Enter ideally
+        this.verifyAndHighlight()
         break;
       case 'Backspace':
         this.handleBackspace(key)
