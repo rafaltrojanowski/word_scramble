@@ -4,6 +4,30 @@ import Game from './components/game';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { ApolloClient } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import gql from 'graphql-tag';
+import { Query } from "react-apollo";
+
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: Expo.Constants.manifest.extra.graphqlEndpoint
+})
+const client = new ApolloClient({
+  cache,
+  link
+})
+
+const GET_RANDOM_WORD = gql`
+  query {
+    word{
+      id
+      contentEn
+    }
+  }
+`;
 
 const intitialState = {
   cursorPosition: -1,
@@ -39,11 +63,20 @@ const store = createStore(reducer, composeWithDevTools())
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <Game word='wannaporn'></Game>
-        </View>
-      </Provider>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <Query query={GET_RANDOM_WORD}>
+              {({ loading, error, data }) => {
+                if (error) return (<Text>Error</Text>)
+                if (loading || !data) return (<Text>Fetching</Text>)
+                let { word } = data
+                return <Game word={word.contentEn}></Game>
+              }}
+            </Query>
+          </View>
+        </Provider>
+      </ApolloProvider>
     );
   }
 }
