@@ -15,8 +15,7 @@ const reducer = (state = intitialState, action) => {
   switch(action.type) {
     case 'REMOVE_WORD':
       const previous = state.previous
-
-      const previousWord = previous[state.cursorPosition - 1]
+      const previousWord = previous[state.cursorPosition - 1].split(",")
       const newPrevious = previous.slice(0, previous.length - 1)
 
       return Object.assign({}, state, {
@@ -26,9 +25,9 @@ const reducer = (state = intitialState, action) => {
       })
      case 'ADD_WORD':
       return Object.assign({}, state, {
+        previous: [...state.previous, `${action.scrambledWord}`], // TODO: somehow it doesn't work when we store letters in array object so instead we store comma separated letters as String
         scrambledWord: action.scrambledWord,
-        cursorPosition: state.cursorPosition + 1,
-        previous: [...state.previous, action.scrambledWord]
+        cursorPosition: state.cursorPosition + 1
       })
     default:
       return state
