@@ -1,3 +1,7 @@
+### Word Scramble Game
+
+![screenshot](scramble.gif)
+
 ### Debugging Redux state
 
 Instalation:
