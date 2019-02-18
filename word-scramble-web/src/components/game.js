@@ -1,5 +1,5 @@
 import React from 'react'
-import Card  from './card'
+import Card  from './Card'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
@@ -44,7 +44,7 @@ class Game extends React.Component {
     if (!scrambledWord) return (<p>Loading...</p>)
 
     return(
-      <div style={{flexDirection:'row', flexWrap:'wrap'}}>
+      <div>
         {scrambledWord.map(function (letter, index) {
           return (
             <Card

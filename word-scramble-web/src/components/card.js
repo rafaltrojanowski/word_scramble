@@ -1,40 +1,25 @@
 import React from 'react';
+import './Card.css';
 
 export default class Card extends React.Component {
 
   render() {
     let { letter, answer, isHighlighted } = this.props
     let status = letter == answer ? 1 : 0
-    let text
+    let className
 
     if (isHighlighted) {
-      text = <p style={ status ? styles.greenText : styles.redText }>{letter}</p>
+      className = status ? 'card green' : 'card red'
     } else {
-      text = <p style={ styles.blackText}>{letter}</p>
+      className = 'card white'
     }
 
     return (
-      <div>{text}</div>
+      <div className={className}>
+        <div className="container">
+          <p>{letter}</p>
+        </div>
+      </div>
     )
-  }
-}
-
-const styles = {
-  blackText: {
-    fontFamily: 'Cochin',
-    fontSize: 50,
-    fontWeight: 'bold',
-  },
-  greenText: {
-    fontFamily: 'Cochin',
-    fontSize: 50,
-    fontWeight: 'bold',
-    color: 'green'
-  },
-  redText: {
-    fontFamily: 'Cochin',
-    fontSize: 50,
-    fontWeight: 'bold',
-    color: 'red'
   }
 }
