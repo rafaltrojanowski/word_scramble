@@ -1,6 +1,12 @@
 ### Word Scramble Game
 
-![screenshot](scramble_s.gif)
+### Web Version
+
+![screenshot](web-app.gif)
+
+### Mobile Version
+
+![screenshot](scramble.gif)
 
 ### Debugging Redux state
 
