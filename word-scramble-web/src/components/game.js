@@ -77,6 +77,10 @@ class Game extends React.Component {
           autoFocus
           onKeyDown={ this.onKeyDown }
           style={{borderWidth: 0, backgroundColor: '#ffef96', color: '#ffef96', outline: 'none' }}
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
         />
       </div>
     )
