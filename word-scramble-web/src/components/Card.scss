@@ -23,10 +23,14 @@
 
 .card.green {
   background-color: #b5e7a0;
+  -webkit-transition: background-color 1s;
+  transition: background-color 1s;
 }
 
 .card.red {
   background-color: #eea29a;
+  -webkit-transition: background-color 1s;
+  transition: background-color 1s;
 }
 
 .card.current {

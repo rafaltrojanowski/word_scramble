@@ -23,18 +23,18 @@ class Game extends React.Component {
 
     this.state = {
       isHighlighted: false,
-      typedKey: null
+      message: "Try to guess the word by typing letters one by one."
     }
   }
 
   render() {
     let { word, scrambledWord } = this.props
-    let { isHighlighted, typedKey } = this.state
+    let { isHighlighted, message } = this.state
 
     return (
       <div>
         {this.renderGame(word, scrambledWord, isHighlighted)}
-        {this.renderInfo(typedKey)}
+        {this.renderInfo(message)}
         {this.renderInput()}
       </div>
     )
@@ -60,11 +60,11 @@ class Game extends React.Component {
     )
   }
 
-  renderInfo = (typedKey) => {
+  renderInfo = (message) => {
     return(
       <div style={{justifyContent: 'center', alignItems: 'center'}}>
-        <p style={{fontSize: 10}}>
-          {typedKey}
+        <p style={{fontSize: 15}}>
+          {message}
         </p>
       </div>
     )
@@ -94,9 +94,9 @@ class Game extends React.Component {
     if(letterIndex != -1) {
       let newScrambledWord = this.arrayMove(scrambledWord, letterIndex, cursorPosition)
       this.props.addWord(newScrambledWord)
-      this.setState({ typedKey: key })
+      this.setState({ message: 'To check you word press Enter. Step back - press Backspace.' })
     } else {
-      this.setState({ typedKey: `Not found: ${key}. Try again!` })
+      this.setState({ message: `Not found: ${key}. Try again!` })
     }
   }
 
