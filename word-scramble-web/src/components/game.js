@@ -71,11 +71,11 @@ class Game extends React.Component {
 
   renderInput = () => {
     return(
-      <div style={{display: 'none'}}>
+      <div style={{}}>
         <input
           autoCapitalize={'none'}
           autoFocus
-          onKeyPress={({ nativeEvent }) => { this.handleKeyPress(nativeEvent.key) }}
+          onKeyDown={ this.onKeyDown }
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
         />
       </div>
@@ -110,9 +110,11 @@ class Game extends React.Component {
 
   toggleHighlight() { this.setState({ isHighlighted: !this.state.isHighlighted }) }
 
-  handleKeyPress = (key) => {
+  onKeyDown = (e) => {
+    let { key } = e
+
     switch(key) {
-      case ' ':
+      case 'Enter':
         this.toggleHighlight()
         break;
       case 'Backspace':
