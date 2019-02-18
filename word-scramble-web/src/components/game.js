@@ -63,7 +63,7 @@ class Game extends React.Component {
   renderInfo = (message) => {
     return(
       <div style={{justifyContent: 'center', alignItems: 'center'}}>
-        <p style={{fontSize: 15}}>
+        <p style={{fontSize: 18, textAlign: 'center'}}>
           {message}
         </p>
       </div>
@@ -76,7 +76,7 @@ class Game extends React.Component {
         <input
           autoFocus
           onKeyDown={ this.onKeyDown }
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          style={{borderWidth: 0, backgroundColor: '#ffef96', color: '#ffef96', outline: 'none' }}
         />
       </div>
     )
