@@ -4,7 +4,7 @@
 
 ![screenshot](web-app.gif)
 
-### Mobile Version
+### Mobile Version (in progress)
 
 ![screenshot](scramble.gif)
 
