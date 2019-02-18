@@ -71,9 +71,8 @@ class Game extends React.Component {
 
   renderInput = () => {
     return(
-      <div style={{}}>
+      <div>
         <input
-          autoCapitalize={'none'}
           autoFocus
           onKeyDown={ this.onKeyDown }
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}

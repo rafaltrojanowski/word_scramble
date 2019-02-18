@@ -84,10 +84,15 @@ class App extends Component {
 
 const styles = {
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
+    position: 'absolute',
+    top:0,
+    bottom:0,
+    right:0,
+    left:0,
   },
 }
 
