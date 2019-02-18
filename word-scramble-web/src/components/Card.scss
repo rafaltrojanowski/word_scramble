@@ -3,12 +3,13 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   display:inline-block;
-  width: 80px;
-  height: 90px;
-  line-height: 90px;
   text-align: center;
   font-size: 50px;
   margin: 5px;
+
+  width: 80px;
+  height: 90px;
+  line-height: 90px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -26,4 +27,10 @@
 
 .card.red {
   background-color: #eea29a;
+}
+
+.card.current {
+  width: 90px;
+  height: 100px;
+  line-height: 100px;
 }

@@ -51,6 +51,7 @@ class Game extends React.Component {
               letter={letter}
               answer={word.split("")[index]}
               isHighlighted={isHighlighted}
+              index={index}
               key={index}>
             </Card>
           )
