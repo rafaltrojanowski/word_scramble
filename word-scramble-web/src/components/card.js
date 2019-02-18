@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import './Card.scss';
 
 export default class Card extends React.Component {
 
@@ -16,9 +16,7 @@ export default class Card extends React.Component {
 
     return (
       <div className={className}>
-        <div className="container">
-          <p>{letter}</p>
-        </div>
+        {letter}
       </div>
     )
   }

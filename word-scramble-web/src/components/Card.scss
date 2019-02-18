@@ -2,9 +2,13 @@
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-
   display:inline-block;
   width: 80px;
+  height: 90px;
+  line-height: 90px;
+  text-align: center;
+  font-size: 50px;
+  margin: 5px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -12,19 +16,14 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Add some padding inside the card container */
-.container {
-  padding: 2px 16px !important;
-}
-
 .card.white {
   background-color: white;
 }
 
 .card.green {
-  background-color: green;
+  background-color: #b5e7a0;
 }
 
 .card.red {
-  background-color: red;
+  background-color: #eea29a;
 }
