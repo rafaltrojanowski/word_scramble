@@ -4,6 +4,18 @@
 
 ![screenshot](web-app.gif)
 
+
+Running:
+
+```
+cd word-scramble-graphql
+rails server
+cd ../word-scramble-web
+yarn start
+```
+
+Open http://localhost:4000
+
 ### Mobile Version (in progress)
 
 ![screenshot](scramble.gif)
