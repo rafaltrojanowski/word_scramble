@@ -98,7 +98,7 @@ class Game extends React.Component {
     if(letterIndex != -1) {
       let newScrambledWord = this.arrayMove(scrambledWord, letterIndex, cursorPosition)
       this.props.addWord(newScrambledWord)
-      this.setState({ message: 'To check you word press Enter. Step back - press Backspace.' })
+      this.setState({ message: 'To check the word press Enter. Step back - press Backspace.' })
     } else {
       this.setState({ message: `Not found: ${key}. Try again!` })
     }
